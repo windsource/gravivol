@@ -1,0 +1,21 @@
+kind: Certificate
+apiVersion: cert-manager.io/v1
+metadata:
+  name: {{ include "gravivol.fullname" . }}-client
+spec:
+  issuerRef:
+    name: ca-root
+    kind: ClusterIssuer
+  secretName: {{ include "gravivol.fullname" . }}-client-cert
+  duration: 87600h
+  dnsNames:
+    - gravivol.fonona.net
+  isCA: false
+  privateKey:
+    algorithm: RSA
+    size: 2048
+    rotationPolicy: Always
+  usages:
+    - client auth
+    - server auth
+  

@@ -1,0 +1,25 @@
+kind: MutatingWebhookConfiguration
+apiVersion: admissionregistration.k8s.io/v1
+metadata:
+  name: {{ include "gravivol.serviceAccountName" . }}
+  annotations:
+    # This configures cert-manager to inject a CA in this resource
+    cert-manager.io/inject-ca-from: default/{{ include "gravivol.fullname" . }}-client
+webhooks:
+  - name: gravivol.fonona.net
+    clientConfig:
+      service:
+        namespace: {{ .Release.Namespace }}
+        name: {{ include "gravivol.fullname" . }}
+        path: /mutate
+        port: {{ .Values.service.port }}
+    rules:
+      - apiGroups: [""]
+        apiVersions: ["v1"]
+        resources: ["pods"]
+        operations: ["CREATE"]
+        scope: Namespaced
+    sideEffects: None
+    admissionReviewVersions: ["v1"]
+    # In case of any problems we do not want the cluster to get stuck
+    failurePolicy: Ignore

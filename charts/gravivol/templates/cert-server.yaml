@@ -1,0 +1,21 @@
+kind: Certificate
+apiVersion: cert-manager.io/v1
+metadata:
+  name: {{ include "gravivol.fullname" . }}-server
+spec:
+  issuerRef:
+    name: ca-root
+    kind: ClusterIssuer
+  secretName: {{ include "gravivol.fullname" . }}-server-cert
+  duration: 87600h
+  dnsNames:
+    - {{ include "gravivol.fullname" . }}.default.svc
+  isCA: false
+  privateKey:
+    encoding: PKCS8 
+    algorithm: RSA
+    size: 2048
+    rotationPolicy: Always
+  usages:
+    - client auth
+    - server auth
