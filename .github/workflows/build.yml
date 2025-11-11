@@ -29,8 +29,11 @@ jobs:
 
       - name: Install cross-compilation tools
         run: |
-          apt update; apt install -y gcc-aarch64-linux-gnu musl-tools
-          dpkg --add-architecture arm64; apt update; apt install -y musl-tools:arm64
+          sudo apt update
+          sudo apt install -y gcc-aarch64-linux-gnu musl-tools
+          sudo dpkg --add-architecture arm64
+          sudo apt update
+          sudo apt install -y musl-tools:arm64
 
       - name: Unit tests
         run: |
