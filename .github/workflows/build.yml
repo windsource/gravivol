@@ -29,7 +29,7 @@ jobs:
 
       - name: Install cross-compilation tools
         run: |
-          sudo cp ./devcontainer/ubuntu.sources /etc/apt/sources.list.d/
+          sudo cp .devcontainer/ubuntu.sources /etc/apt/sources.list.d/
           sudo apt update
           sudo apt install -y gcc-aarch64-linux-gnu musl-tools
           sudo dpkg --add-architecture arm64
