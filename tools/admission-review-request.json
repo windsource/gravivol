@@ -1,0 +1,286 @@
+{
+    "kind": "AdmissionReview",
+    "apiVersion": "admission.k8s.io/v1",
+    "request": {
+        "uid": "23d31e3a-0e26-40a4-8624-fa591f62fe22",
+        "kind": {
+            "group": "",
+            "version": "v1",
+            "kind": "Pod"
+        },
+        "resource": {
+            "group": "",
+            "version": "v1",
+            "resource": "pods"
+        },
+        "requestKind": {
+            "group": "",
+            "version": "v1",
+            "kind": "Pod"
+        },
+        "requestResource": {
+            "group": "",
+            "version": "v1",
+            "resource": "pods"
+        },
+        "namespace": "default",
+        "operation": "CREATE",
+        "userInfo": {
+            "username": "system:serviceaccount:kube-system:replicaset-controller",
+            "uid": "e2e9fc9c-a8a4-4cae-b990-2ac3bc6c723d",
+            "groups": [
+                "system:serviceaccounts",
+                "system:serviceaccounts:kube-system",
+                "system:authenticated"
+            ],
+            "extra": {
+                "authentication.kubernetes.io/credential-id": [
+                    "JTI=4c6a3914-c497-4022-bbe0-a0aae5ea2fb8"
+                ]
+            }
+        },
+        "object": {
+            "kind": "Pod",
+            "apiVersion": "v1",
+            "metadata": {
+                "generateName": "bla-7f685c974-",
+                "namespace": "default",
+                "creationTimestamp": null,
+                "labels": {
+                    "app.kubernetes.io/instance": "bla",
+                    "app.kubernetes.io/managed-by": "Helm",
+                    "app.kubernetes.io/name": "bla",
+                    "app.kubernetes.io/version": "1.16.0",
+                    "helm.sh/chart": "bla-0.1.0",
+                    "pod-template-hash": "7f685c974"
+                },
+                "ownerReferences": [
+                    {
+                        "apiVersion": "apps/v1",
+                        "kind": "ReplicaSet",
+                        "name": "bla-7f685c974",
+                        "uid": "cd03ea36-e516-413e-8de9-cb2c57274fe5",
+                        "controller": true,
+                        "blockOwnerDeletion": true
+                    }
+                ],
+                "managedFields": [
+                    {
+                        "manager": "k3s",
+                        "operation": "Update",
+                        "apiVersion": "v1",
+                        "time": "2025-11-11T07:42:29Z",
+                        "fieldsType": "FieldsV1",
+                        "fieldsV1": {
+                            "f:metadata": {
+                                "f:generateName": {},
+                                "f:labels": {
+                                    ".": {},
+                                    "f:app.kubernetes.io/instance": {},
+                                    "f:app.kubernetes.io/managed-by": {},
+                                    "f:app.kubernetes.io/name": {},
+                                    "f:app.kubernetes.io/version": {},
+                                    "f:helm.sh/chart": {},
+                                    "f:pod-template-hash": {}
+                                },
+                                "f:ownerReferences": {
+                                    ".": {},
+                                    "k:{\"uid\":\"cd03ea36-e516-413e-8de9-cb2c57274fe5\"}": {}
+                                }
+                            },
+                            "f:spec": {
+                                "f:containers": {
+                                    "k:{\"name\":\"bla\"}": {
+                                        ".": {},
+                                        "f:env": {
+                                            ".": {},
+                                            "k:{\"name\":\"BLA\"}": {
+                                                ".": {},
+                                                "f:name": {},
+                                                "f:value": {}
+                                            }
+                                        },
+                                        "f:image": {},
+                                        "f:imagePullPolicy": {},
+                                        "f:livenessProbe": {
+                                            ".": {},
+                                            "f:failureThreshold": {},
+                                            "f:httpGet": {
+                                                ".": {},
+                                                "f:path": {},
+                                                "f:port": {},
+                                                "f:scheme": {}
+                                            },
+                                            "f:periodSeconds": {},
+                                            "f:successThreshold": {},
+                                            "f:timeoutSeconds": {}
+                                        },
+                                        "f:name": {},
+                                        "f:ports": {
+                                            ".": {},
+                                            "k:{\"containerPort\":80,\"protocol\":\"TCP\"}": {
+                                                ".": {},
+                                                "f:containerPort": {},
+                                                "f:name": {},
+                                                "f:protocol": {}
+                                            }
+                                        },
+                                        "f:readinessProbe": {
+                                            ".": {},
+                                            "f:failureThreshold": {},
+                                            "f:httpGet": {
+                                                ".": {},
+                                                "f:path": {},
+                                                "f:port": {},
+                                                "f:scheme": {}
+                                            },
+                                            "f:periodSeconds": {},
+                                            "f:successThreshold": {},
+                                            "f:timeoutSeconds": {}
+                                        },
+                                        "f:resources": {},
+                                        "f:terminationMessagePath": {},
+                                        "f:terminationMessagePolicy": {}
+                                    }
+                                },
+                                "f:dnsPolicy": {},
+                                "f:enableServiceLinks": {},
+                                "f:restartPolicy": {},
+                                "f:schedulerName": {},
+                                "f:securityContext": {},
+                                "f:serviceAccount": {},
+                                "f:serviceAccountName": {},
+                                "f:terminationGracePeriodSeconds": {}
+                            }
+                        }
+                    }
+                ]
+            },
+            "spec": {
+                "volumes": [
+                    {
+                        "name": "kube-api-access-zjtkd",
+                        "projected": {
+                            "sources": [
+                                {
+                                    "serviceAccountToken": {
+                                        "expirationSeconds": 3607,
+                                        "path": "token"
+                                    }
+                                },
+                                {
+                                    "configMap": {
+                                        "name": "kube-root-ca.crt",
+                                        "items": [
+                                            {
+                                                "key": "ca.crt",
+                                                "path": "ca.crt"
+                                            }
+                                        ]
+                                    }
+                                },
+                                {
+                                    "downwardAPI": {
+                                        "items": [
+                                            {
+                                                "path": "namespace",
+                                                "fieldRef": {
+                                                    "apiVersion": "v1",
+                                                    "fieldPath": "metadata.namespace"
+                                                }
+                                            }
+                                        ]
+                                    }
+                                }
+                            ],
+                            "defaultMode": 420
+                        }
+                    }
+                ],
+                "containers": [
+                    {
+                        "name": "bla",
+                        "image": "nginx:1.16.0",
+                        "ports": [
+                            {
+                                "name": "http",
+                                "containerPort": 80,
+                                "protocol": "TCP"
+                            }
+                        ],
+                        "env": [
+                            {
+                                "name": "BLA",
+                                "value": "blub"
+                            }
+                        ],
+                        "resources": {},
+                        "volumeMounts": [
+                            {
+                                "name": "kube-api-access-zjtkd",
+                                "readOnly": true,
+                                "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount"
+                            }
+                        ],
+                        "livenessProbe": {
+                            "httpGet": {
+                                "path": "/",
+                                "port": "http",
+                                "scheme": "HTTP"
+                            },
+                            "timeoutSeconds": 1,
+                            "periodSeconds": 10,
+                            "successThreshold": 1,
+                            "failureThreshold": 3
+                        },
+                        "readinessProbe": {
+                            "httpGet": {
+                                "path": "/",
+                                "port": "http",
+                                "scheme": "HTTP"
+                            },
+                            "timeoutSeconds": 1,
+                            "periodSeconds": 10,
+                            "successThreshold": 1,
+                            "failureThreshold": 3
+                        },
+                        "terminationMessagePath": "/dev/termination-log",
+                        "terminationMessagePolicy": "File",
+                        "imagePullPolicy": "IfNotPresent"
+                    }
+                ],
+                "restartPolicy": "Always",
+                "terminationGracePeriodSeconds": 30,
+                "dnsPolicy": "ClusterFirst",
+                "serviceAccountName": "bla",
+                "serviceAccount": "bla",
+                "securityContext": {},
+                "schedulerName": "default-scheduler",
+                "tolerations": [
+                    {
+                        "key": "node.kubernetes.io/not-ready",
+                        "operator": "Exists",
+                        "effect": "NoExecute",
+                        "tolerationSeconds": 300
+                    },
+                    {
+                        "key": "node.kubernetes.io/unreachable",
+                        "operator": "Exists",
+                        "effect": "NoExecute",
+                        "tolerationSeconds": 300
+                    }
+                ],
+                "priority": 0,
+                "enableServiceLinks": true,
+                "preemptionPolicy": "PreemptLowerPriority"
+            },
+            "status": {}
+        },
+        "oldObject": null,
+        "dryRun": false,
+        "options": {
+            "kind": "CreateOptions",
+            "apiVersion": "meta.k8s.io/v1"
+        }
+    }
+}
