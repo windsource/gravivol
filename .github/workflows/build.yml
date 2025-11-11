@@ -50,7 +50,7 @@ jobs:
         run: |
           cargo build --release --target aarch64-unknown-linux-musl
           mkdir -p dist/arm64
-          cp target/aarch64-unknown-linux-musl/gravivol dist/arm64/
+          cp target/aarch64-unknown-linux-musl/release/gravivol dist/arm64/
         env:
           CC: "/usr/bin/aarch64-linux-musl-gcc"
           CARGO_TARGET_AARCH64_UNKNOWN_LINUX_MUSL_LINKER: aarch64-linux-gnu-gcc
