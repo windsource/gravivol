@@ -1,11 +1,12 @@
 replicaCount: 1
 
 image:
-  repository: gravivol-reg:5000/gravivol
-  #pullPolicy: IfNotPresent
-  pullPolicy: Always
+  repository: ghcr.io/windsource/gravivol
+  #repository: gravivol-reg:5000/gravivol
+  pullPolicy: IfNotPresent
+  #pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "0.0.1"
+  tag: "main"
 
 imagePullSecrets: []
 # This is to override the chart name.
