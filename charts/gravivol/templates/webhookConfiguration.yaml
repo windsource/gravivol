@@ -4,7 +4,7 @@ metadata:
   name: {{ include "gravivol.serviceAccountName" . }}
   annotations:
     # This configures cert-manager to inject a CA in this resource
-    cert-manager.io/inject-ca-from: default/{{ include "gravivol.fullname" . }}-client
+    cert-manager.io/inject-ca-from: {{ .Release.Namespace }}/{{ include "gravivol.fullname" . }}-client
 webhooks:
   - name: gravivol.fonona.net
     clientConfig:

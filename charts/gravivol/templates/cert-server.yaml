@@ -9,7 +9,7 @@ spec:
   secretName: {{ include "gravivol.fullname" . }}-server-cert
   duration: 87600h
   dnsNames:
-    - {{ include "gravivol.fullname" . }}.default.svc
+    - {{ include "gravivol.fullname" . }}.{{ .Release.Namespace }}.svc
   isCA: false
   privateKey:
     encoding: PKCS8 
