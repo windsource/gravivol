@@ -2,6 +2,16 @@ apiVersion: v1
 entries:
   gravivol:
   - apiVersion: v2
+    appVersion: main
+    created: "2025-11-23T11:54:21.031254423Z"
+    description: A Helm chart for a mutating admission webhook to fix pod scheduling
+    digest: d239aa04d5a5eb42d94bc3fa38a29306c358a5418cb96d27739e52b700043c9b
+    name: gravivol
+    type: application
+    urls:
+    - https://github.com/windsource/gravivol/releases/download/gravivol-1.0.1/gravivol-1.0.1.tgz
+    version: 1.0.1
+  - apiVersion: v2
     appVersion: 0.0.1
     created: "2025-11-11T07:33:57.766054924Z"
     description: A mutating admission webhook to fix pod scheduling
@@ -11,4 +21,4 @@ entries:
     urls:
     - https://github.com/windsource/gravivol/releases/download/gravivol-1.0.0/gravivol-1.0.0.tgz
     version: 1.0.0
-generated: "2025-11-11T07:33:57.766061446Z"
+generated: "2025-11-23T11:54:21.031261777Z"
