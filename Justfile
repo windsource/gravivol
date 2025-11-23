@@ -48,14 +48,7 @@ itest:
 # Build container and push to local registry
 build-container:
     #!/bin/sh -e
-    cargo build
-    mkdir -p dist/{{docker_arch}}
-    cp target/debug/gravivol dist/{{docker_arch}}/
     PORT=$(docker inspect {{registry}} | jq -r '.[0].HostConfig.PortBindings."5000/tcp".[0].HostPort')
-    IMAGE=localhost:${PORT}/gravivol:0.0.1
-    docker build -t $IMAGE .
+    IMAGE=localhost:${PORT}/gravivol:main
+    docker build -t $IMAGE -f tools/Dockerfile.local .
     docker push $IMAGE
-
-
-
-

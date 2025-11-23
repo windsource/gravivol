@@ -42,7 +42,7 @@ spec:
             - name: RUST_BACKTRACE
               value: "1"
             - name: RUST_LOG
-              value: info
+              value: {{ .Values.rustLog }}
             - name: GRAVIVOL_CONFIG
               value: {{ .Values.pvcConfig }}
           ports:

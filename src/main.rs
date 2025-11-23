@@ -1,9 +1,9 @@
 use std::{env, error::Error, fs::File, io::BufReader};
 
 use actix_web::{
-    get,
-    http::{header::ContentType, StatusCode},
-    post, web, App, HttpResponse, HttpServer, Responder,
+    App, HttpResponse, HttpServer, Responder, get,
+    http::{StatusCode, header::ContentType},
+    post, web,
 };
 
 use rustls::ServerConfig;
@@ -42,12 +42,12 @@ fn load_rustls_config() -> Result<ServerConfig, Box<dyn Error>> {
 
 #[post("/mutate")]
 async fn mutate(req_body: String, controller: web::Data<Controller>) -> impl Responder {
-    log::info!("Got: {}", req_body);
+    log::debug!("Got: {}", req_body);
 
     if let Ok(review) = serde_json::from_str(&req_body) {
         match controller.mutate(review) {
             Ok(response) => {
-                log::info!("Response is OK: {:?}", response);
+                log::debug!("Response is OK: {:?}", response);
                 HttpResponse::Ok().json(response)
             }
             Err(err) => {

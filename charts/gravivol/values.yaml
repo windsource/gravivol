@@ -18,6 +18,9 @@ fullnameOverride: ""
 # If the list is empty, all PVCs in all namespaces are handled
 pvcConfig: ""
 
+# See Rust log levels
+rustLog: info
+
 serviceAccount:
   create: true
   automount: true

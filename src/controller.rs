@@ -1,16 +1,32 @@
 use std::collections::{HashMap, HashSet};
 
-use base64::{prelude::BASE64_STANDARD, Engine};
+use base64::{Engine, prelude::BASE64_STANDARD};
 use json_patch::diff;
 use serde::{Deserialize, Serialize};
-use serde_json::{json, Value};
+use serde_json::{Value, json};
 
 #[derive(Clone, Debug, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 struct Metadata {
+    #[serde(skip_serializing_if = "Option::is_none")]
+    name: Option<String>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    generate_name: Option<String>,
     namespace: String,
     #[serde(skip_serializing_if = "Option::is_none")]
     labels: Option<HashMap<String, String>>,
+}
+
+impl Metadata {
+    pub fn get_display_name(&self) -> String {
+        if let Some(name) = &self.name {
+            format!("{}/{}", self.namespace, name)
+        } else if let Some(generate_name) = &self.generate_name {
+            format!("{}/{}", self.namespace, generate_name)
+        } else {
+            format!("{}/unknown", self.namespace)
+        }
+    }
 }
 
 #[derive(Debug)]
@@ -143,7 +159,7 @@ fn create_patch(pod: &Pod, pvcs: Vec<String>) -> String {
     let result_patch =
         serde_json::to_string(&diff(&original_pod, &patched_pod)).expect("Cannot serialize patch");
 
-    log::info!("Patch: {result_patch}");
+    log::debug!("Patch: {result_patch}");
     result_patch
 }
 
@@ -181,10 +197,10 @@ impl Controller {
     pub fn new(config: &str) -> Controller {
         let mut pvcs = HashSet::new();
         for config_entry in config.split(',') {
-            if !config_entry.is_empty() {
-                if let Some(pvc) = Pvc::from_config_entry(config_entry) {
-                    pvcs.insert(pvc);
-                }
+            if !config_entry.is_empty()
+                && let Some(pvc) = Pvc::from_config_entry(config_entry)
+            {
+                pvcs.insert(pvc);
             }
         }
         Controller {
@@ -227,16 +243,24 @@ impl Controller {
                 return Ok(review);
             }
 
+            log::info!(
+                "Got review request for pod {}",
+                request.object.metadata.get_display_name(),
+            );
+
             // Extract PVCs
             if let Some(volumes) = &request.object.spec.volumes {
                 for vol in volumes {
-                    if let Some(pvc) = &vol.persistent_volume_claim {
-                        if self
+                    if let Some(pvc) = &vol.persistent_volume_claim
+                        && self
                             .pvc_needs_handling(&request.object.metadata.namespace, &pvc.claim_name)
-                        {
-                            log::info!("Pod uses matching PVC {}", pvc.claim_name);
-                            pvcs_found.push(pvc.claim_name.to_owned());
-                        }
+                    {
+                        log::info!(
+                            "Pod {} uses matching PVC {}",
+                            request.object.metadata.get_display_name(),
+                            pvc.claim_name
+                        );
+                        pvcs_found.push(pvc.claim_name.to_owned());
                     }
                 }
             }
@@ -248,6 +272,15 @@ impl Controller {
                 response.patch_type = Some("JSONPatch".to_owned());
                 response.patch = Some(BASE64_STANDARD.encode(patch.as_bytes()));
                 review.response = Some(response);
+                log::info!(
+                    "Created patch for pod {}",
+                    request.object.metadata.get_display_name()
+                );
+            } else {
+                log::info!(
+                    "No patch required for pod {}",
+                    request.object.metadata.get_display_name()
+                );
             }
 
             Ok(review)
@@ -259,7 +292,7 @@ impl Controller {
 
 #[cfg(test)]
 mod tests {
-    use json_patch::{patch, Patch};
+    use json_patch::{Patch, patch};
     use serde_json::json;
 
     use super::*;
@@ -619,8 +652,7 @@ mod tests {
         pod_after["metadata"]["labels"]["my-namespace.gravivol.fonona.net/myvol2"] =
             Value::String("true".to_owned());
 
-        if let Value::Array(the_array) = &mut pod_after["spec"]["affinity"]["podAffinity"]
-            ["requiredDuringSchedulingIgnoredDuringExecution"]
+        if let Value::Array(the_array) = &mut pod_after["spec"]["affinity"]["podAffinity"]["requiredDuringSchedulingIgnoredDuringExecution"]
         {
             the_array.push(json!({
                 "labelSelector": {
