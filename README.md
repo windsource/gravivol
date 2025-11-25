@@ -53,6 +53,8 @@ Configuration:
 | ----- | ----------- | ------- |
 | pvcConfig | The list of PVCs to be handled. Format is a comma separated list of `<namespace>/<PVC>`. If the list is empty, all PVCs in all namespace will be handled. | "" |
 
+For further configuration parameters see [values.yaml](charts/gravivol/values.yaml).
+
 ## Reference
 
 For the concept of admission webhooks see the Kubernetes page on [Dynamic Admission Control](https://kubernetes.io/docs/reference/access-authn-authz/extensible-admission-controllers/).
