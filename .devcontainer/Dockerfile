@@ -12,15 +12,15 @@ COPY ubuntu.sources /etc/apt/sources.list.d/
 
 # All the packages we need
 RUN export DEBIAN_FRONTEND=noninteractive \
-    && apt update && \
+    && apt-get update && \
     if [ "$TARGETARCH" = "amd64" ]; then \
-        apt install -y gcc-aarch64-linux-gnu; \
-        dpkg --add-architecture arm64; apt update; apt install -y musl-tools:arm64; \
+        apt-get install -y gcc-aarch64-linux-gnu; \
+        dpkg --add-architecture arm64; apt-get update; apt-get install -y musl-tools:arm64; \
     elif [ "$TARGETARCH" = "arm64" ]; then \
-        apt install -y gcc-x86-64-linux-gnu; \
-        dpkg --add-architecture amd64; apt update; apt install -y musl-tools:amd64; \
+        apt-get install -y gcc-x86-64-linux-gnu; \
+        dpkg --add-architecture amd64; apt-get update; apt-get install -y musl-tools:amd64; \
     fi \
-    && apt -y install \
+    && apt-get -y install \
     # Basics
     git \
     zsh \
