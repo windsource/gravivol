@@ -30,25 +30,7 @@ jobs:
 
       - name: Install cross-compilation tools
         run: |
-          cat <<EOF | sudo tee -a /etc/apt/sources.list.d/ubuntu.sources
-
-          Types: deb
-          URIs: http://ports.ubuntu.com/ubuntu-ports/
-          Suites: noble noble-updates noble-backports
-          Components: main universe restricted multiverse
-          Architectures: arm64
-          Signed-By: /usr/share/keyrings/ubuntu-archive-keyring.gpg
-
-          ## Ubuntu security updates. Aside from URIs and Suites,
-          ## this should mirror your choices in the previous section.
-          Types: deb
-          URIs: http://ports.ubuntu.com/ubuntu-ports/
-          Suites: noble-security
-          Components: main universe restricted multiverse
-          Architectures: arm64
-          Signed-By: /usr/share/keyrings/ubuntu-archive-keyring.gpg
-          EOF
-
+          sudo cp .devcontainer/ubuntu.sources /etc/apt/sources.list.d/
           sudo apt update
           sudo apt install -y gcc-aarch64-linux-gnu musl-tools
           sudo dpkg --add-architecture arm64
