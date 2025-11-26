@@ -1,6 +1,6 @@
 # Gravivol
 
-Gravivol is a Kubernetes [mutating admission webhook](https://kubernetes.io/docs/reference/access-authn-authz/admission-controllers/#mutatingadmissionwebhook). It a is workaround for a problem in Kubernetes, that pods using the same PVC with ReadWriteOnce get scheduled on different nodes and thus cannot run (see the open issue 
+Gravivol is a Kubernetes [mutating admission webhook](https://kubernetes.io/docs/reference/access-authn-authz/admission-controllers/#mutatingadmissionwebhook). It is a workaround for a problem in Kubernetes, that pods using the same PVC with ReadWriteOnce get scheduled on different nodes and thus cannot run (see the open issue 
 in Kubernetes [#103305](https://github.com/kubernetes/kubernetes/issues/103305) and also [hetznercloud/csi-driver #319](
 https://github.com/hetznercloud/csi-driver/issues/319)).
 
